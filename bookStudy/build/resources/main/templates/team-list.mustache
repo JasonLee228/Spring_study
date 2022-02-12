@@ -1,0 +1,29 @@
+{{>layout/header}}
+
+<h1>팀 목록</h1>
+
+<div class="col-md-12">
+    <table class="table table-horizontal table-bordered">
+        <thead class="thead-strong">
+        <tr>
+            <th>번호</th>
+            <th>팀명</th>
+            <th>감독</th>
+            <th>팀 소개</th>
+        </tr>
+        </thead>
+        <tbody id="tbody">
+        {{#team}}
+            <tr>
+                <td>{{id}}</td>
+                <td>{{teamname}}</td>
+                <td>{{leader}}</td>
+                <td>{{introdution}}</td>
+            </tr>
+        {{/team}}
+        <a href="/" class="btn btn-info active" role="button">Home</a>
+        </tbody>
+    </table>
+</div>
+
+{{>layout/footer-team}}

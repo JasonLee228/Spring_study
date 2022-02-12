@@ -1,0 +1,27 @@
+{{>layout/header}}
+
+<h1>팀 등록</h1>
+
+<div class="col-md-12">
+    <div class="col-md-4">
+        <form>
+            <div class="form-group">
+                <label for="teamname">팀명</label>
+                <input type="text" class="form-control" id="teamname" placeholder="팀 이름을 입력하세요">
+            </div>
+            <div class="form-group">
+                <label for="leader"> 팀장 </label>
+                <input type="text" class="form-control"
+                       id="leader" name="userNames" value="{{userNames}}" >
+            </div>
+            <div class="form-group">
+                <label for="introdution"> 팀 소개 </label>
+                <textarea class="form-control" id="introdution" placeholder="내용을 입력하세요"></textarea>
+            </div>
+        </form>
+        <a href="/" role="button" class="btn btn-secondary">취소</a>
+        <button type="button" class="btn btn-primary" id="btn-save">등록</button>
+    </div>
+</div>
+
+{{>layout/footer-team}}

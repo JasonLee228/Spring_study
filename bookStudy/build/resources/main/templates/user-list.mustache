@@ -1,0 +1,29 @@
+{{>layout/header}}
+
+<h1>전체 유저 목록</h1>
+
+<div class="col-md-12">
+    <table class="table table-horizontal table-bordered">
+        <thead class="thead-strong">
+        <tr>
+            <th>번호</th>
+            <th>이메일</th>
+            <th>이름</th>
+            <th>등급</th>
+        </tr>
+        </thead>
+        <tbody id="tbody">
+        {{#user}}
+            <tr>
+                <td>{{id}}</td>
+                <td>{{email}}</td>
+                <td>{{name}}</td>
+                <td>{{role}}</td>
+            </tr>
+        {{/user}}
+        <a href="/" class="btn btn-info active" role="button">Home</a>
+        </tbody>
+    </table>
+</div>
+
+{{>layout/footer}}

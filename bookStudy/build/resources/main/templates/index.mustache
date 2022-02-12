@@ -1,0 +1,28 @@
+{{>layout/header}}
+
+<h1>웹 공부공부 하기싫지만 해야하는 공부공부</h1>
+<div class="col-md-12">
+    <!-- 로그인 기능 영역 -->
+    <div class="row">
+        <div class="col-md-6">
+            <a href="/posts/save" role="button" class="btn btn-primary">글 등록</a>
+            <a href="/posts/list" role="button" class="btn btn-primary">글 목록</a>
+            <a href="/team/save" role="button" class="btn btn-primary">팀 등록</a>
+            <a href="/team/list" role="button" class="btn btn-primary">팀 목록</a>
+            <a href="/user/list" role="button" class="btn btn-primary">전체 회원 리스트</a>
+            <!-- #은 userNames가 있는 경우 보여지는 것이고, ^은 그 반대. -->
+            {{#userNames}}
+                Logged in as: <span id="user">{{userNames}}</span>
+                <a href="/logout" class="btn btn-info active" role="button">Logout</a>
+            {{/userNames}}
+            {{^userNames}}
+                <a href="/oauth2/authorization/google" class="btn btn-success active" role="button">Google Login</a>
+                <a href="/oauth2/authorization/naver" class="btn btn-secondary active" role="button">Naver Login</a>
+                <a href="/oauth2/authorization/kakao" class="btn btn-warning active" role="button">Kakao Login</a>
+            {{/userNames}}
+        </div>
+    </div>
+
+</div>
+
+{{>layout/footer}}
