@@ -32,6 +32,9 @@ import com.fasterxml.jackson.databind.JsonMappingException;
  * @author kate
  *
  */
+/*
+	얻어온 유저 엑세스 토큰을 통해 리소스 서버에 정보를 요청해서 따오는 서비스 클래스
+ */
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
 	
 	private static final Logger logger = LogManager.getLogger(CustomOAuth2UserService.class);
@@ -48,6 +51,12 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 		String resourceServerUri = userRequest.getClientRegistration().getProviderDetails().getUserInfoEndpoint().getUri();
 		String accessToken = userRequest.getAccessToken().getTokenValue();
 
+		System.out.println("###registrationID###" + clientRegistrationId);
+		System.out.println("###resourceServerUri###" + resourceServerUri);
+		System.out.println("###accessToken###" + accessToken);//
+
+
+
 //		if (logger.isDebugEnabled()) {
 //			logger.debug(accessToken);
 //		}	
@@ -63,7 +72,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 		String userNameAttributeName = OAuth2UserAttribute.USER_ID;
 		
 
-		Map<String, Object> attributes = null;
+		Map<String, Object> attributes = null;//유저 정보 담을 map생성
 				
 		if (resourceServerUri != null && !"".equals(resourceServerUri) 
 				&& accessToken != null && !"".equals(accessToken)) {

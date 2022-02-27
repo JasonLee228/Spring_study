@@ -48,11 +48,20 @@ public class OAuth2UserAttribute {
 			  "response":{"id":"55XXXXXX","gender":"M","email":"foo@naver.com"}
 			}
 			*/
+			/*
+			response:
+			{
+				"id":"QpWXQ1Dgb32nhVqLXrZCOGH8pQK5ujlJUYHHGfo1e1U"->토큰?
+				,"profile_image":"https://ssl.pstatic.net/static/pwe/address/img_profile.png"
+				,"email":"ypd05172@naver.com"
+				,"name":"이찬근"
+			}
+			 */
 			
 			JsonNode node = new ObjectMapper().readTree(response);
-			
+			System.out.println("###NODE###"+node+"\n###END NODE###");
 			attributes.put(USER_ID, node.get("response").get("id").toString().replaceAll("\"", ""));
-			attributes.put(USER_NAME, node.get("response").get("nickname"));
+			attributes.put(USER_NAME, node.get("response").get("name"));//nickname->name 변경,
 			attributes.put(USER_EMAIL, node.get("response").get("email"));
 			
 		} else if ("google".equals(registrationId)){
@@ -74,10 +83,15 @@ public class OAuth2UserAttribute {
 			
 			ObjectMapper mapper = new ObjectMapper();
 			Map<String, String> responseMap = mapper.readValue(response, new TypeReference<Map<String, String>>() {});
-			
+			System.out.println("###RESPONSE###"+responseMap+"\n###END RESPONSE###");
 			attributes.put(USER_ID, responseMap.get("sub"));
 			attributes.put(USER_NAME, responseMap.get("family_name") + " " + responseMap.get("given_name"));
 			attributes.put(USER_EMAIL, responseMap.get("email"));				
+		} else if("kakao".equals(registrationId)){
+
+
+			JsonNode node = new ObjectMapper().readTree(response);
+			System.out.println("###NODE###"+node+"\n###END NODE###");
 		}
 		
 		

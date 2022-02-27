@@ -48,10 +48,10 @@ public class CustomOAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHa
 			logger.debug(authentication.getPrincipal());
 		}
 		
-		
+
 		String frontendAppEntryPage = env.getProperty("frontend-app.entry");
 				
-		String jwt = jwtUtils.generateToken((DefaultOAuth2User) authentication.getPrincipal());
+		String jwt = jwtUtils.generateToken((DefaultOAuth2User) authentication.getPrincipal());//토큰 생성?
 		
 		//TODO 고유 ID와 권한을 DB에 저장하는 것이 어떨지? 권한은 리스트형이다.
 		// 
