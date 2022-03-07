@@ -3,6 +3,10 @@ package com.example.demo.config;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.example.demo.domain.user.Role;
+import com.example.demo.domain.user.User;
+import lombok.Builder;
+import lombok.Getter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
@@ -17,27 +21,47 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * OAuth2의 인증 공급자로부터 취득한 사용자 정보를 다시 애플리케이션의 목적에 맞도록 구성 
  * 사용자 정보는 다음 세가지 정보만 보유하기로 한다.
  * userId, userName, userEmail
- * 
+ * -> 22.3.3/ 다시 재구성해야됨.
+ *
  * @author kate
  *
  */
 @Component
+@Getter
 public class OAuth2UserAttribute {
 	
 	private static final Logger logger = LogManager.getLogger(OAuth2UserAttribute.class);
 	
 	// TODO 권한정보는?
-	public static final String USER_ID = "userId";
-	public static final String USER_NAME = "userName";
-	public static final String USER_EMAIL = "userEmail";
-	
-	
-	public Map<String, Object> getOAuth2UserAttributes(String registrationId, String response) 
+	/*
+	public static final String id = "userId";
+	public static final String name = "userName";
+	public static final String email = "userEmail";
+
+	 */
+	//public Map<String, Object> attributes;
+	public static final String id = "userId";
+	public static final String name = "userName";
+	public static final String email = "userEmail";
+	public static final String picture= "userPicture";
+
+	/*
+	@Builder
+	public OAuth2UserAttribute(Map<String, Object> attributes, String name, String email, String picture) {
+		this.attributes = attributes;
+		this.name = name;
+		this.email = email;
+		this.picture = picture;
+	}
+*/
+
+
+	public Map<String, Object> getOAuth2UserAttributes(String registrationId, String response)
 			throws JsonMappingException, JsonProcessingException {
 		
 		Map<String, Object> attributes = new HashMap<>();
 		
-		if ("naver".equals(registrationId)){
+		if ("naver".equals(registrationId)) {
 			
 			//응답 형태
 			//애플리케이션 등록시 제공정보 항목에 따라 차이가 있음
@@ -60,9 +84,12 @@ public class OAuth2UserAttribute {
 			
 			JsonNode node = new ObjectMapper().readTree(response);
 			System.out.println("###NODE###"+node+"\n###END NODE###");
-			attributes.put(USER_ID, node.get("response").get("id").toString().replaceAll("\"", ""));
-			attributes.put(USER_NAME, node.get("response").get("name"));//nickname->name 변경,
-			attributes.put(USER_EMAIL, node.get("response").get("email"));
+			attributes.put(id, node.get("response").get("id").toString().replaceAll("\"", ""));
+			attributes.put(name, node.get("response").get("name"));//nickname->name 변경,
+			attributes.put(email, node.get("response").get("email"));
+			attributes.put(picture, node.get("response").get("profile_image"));
+
+
 			
 		} else if ("google".equals(registrationId)){
 			
@@ -84,24 +111,27 @@ public class OAuth2UserAttribute {
 			ObjectMapper mapper = new ObjectMapper();
 			Map<String, String> responseMap = mapper.readValue(response, new TypeReference<Map<String, String>>() {});
 			System.out.println("###RESPONSE###"+responseMap+"\n###END RESPONSE###");
-			attributes.put(USER_ID, responseMap.get("sub"));
-			attributes.put(USER_NAME, responseMap.get("family_name") + " " + responseMap.get("given_name"));
-			attributes.put(USER_EMAIL, responseMap.get("email"));				
+			attributes.put(id, responseMap.get("sub"));
+			attributes.put(name, responseMap.get("family_name") + "" + responseMap.get("given_name"));
+			attributes.put(email, responseMap.get("email"));
+			attributes.put(picture, responseMap.get("picture"));
 		} else if("kakao".equals(registrationId)){
 
+			System.out.println("###kakao###!!!!!!!!!!!!!!!!!!");
 
-			JsonNode node = new ObjectMapper().readTree(response);
-			System.out.println("###NODE###"+node+"\n###END NODE###");
+
 		}
 		
 		
-//		if (logger.isDebugEnabled()) {
-//			logger.debug(attributes);
-//		}
-		
-		
-		return attributes;		
+		if (logger.isDebugEnabled()) {
+			System.out.println("###logger.isDebugEnabled() !!!###");
+			logger.debug(attributes);
+		}
+
+
+		return attributes;
+
 	}
-	
+
 
 }

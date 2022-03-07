@@ -43,7 +43,7 @@ public class RestHomeController {
 	
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<String> exception(Exception e) {		
-		return new ResponseEntity<String>("/api/hello/ sdf!", HttpStatus.OK);
+		return new ResponseEntity<String>("/api/hello", HttpStatus.OK);
 	}
 
 }

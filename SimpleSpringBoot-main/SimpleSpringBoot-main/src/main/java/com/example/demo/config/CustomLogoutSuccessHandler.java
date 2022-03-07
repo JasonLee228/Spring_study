@@ -31,9 +31,15 @@ public class CustomLogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler {
 		
 		response.addCookie(cookieUtils.generateRemoveJwtCookie(env.getProperty("jwt.token-name"), ""));
 		response.addCookie(cookieUtils.generateRemoveJwtCookie(env.getProperty("jwt.token-name") + "-flag", ""));
-		
+
+		System.out.println("###logout response ### : "+response);
+
 		getRedirectStrategy().sendRedirect(request, response, frontendAppEntryPage);
-		
+
+
+		//logout success service made
+
+
 	}
 
 }
